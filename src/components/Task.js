@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 export const Task = () => {
   const tasks = useSelector((state) => state.task.tasks);
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-4 gap-4">
       {tasks.map((task) => (
         <div key={task.id} className="m-5">
           <div
@@ -16,7 +16,7 @@ export const Task = () => {
             } overflow-hidden sm:rounded-lg`}
           >
             <div className="px-4 py-5 sm:px-6 grid grid-cols-2">
-              <h3 className="text-lg ml-48 mt-1 leading-6 font-medium text-teal-500">
+              <h3 className="text-lg ml-24 mt-1 leading-6 font-medium text-teal-500">
                 {task.title}{" "}
               </h3>
               <a
@@ -68,7 +68,7 @@ export const Task = () => {
                     borderBottom: "none",
                     backgroundPosition: 'bottom left',
                     backgroundImage: `url('data:image/svg+xml;utf8, <svg viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg"><path d="M -15 110 L100 10 L215 110" fill="none" stroke="%23ededed" stroke-width="4" vector-effect="non-scaling-stroke"/></svg>')`,
-                    backgroundSize: "4.5% auto",
+                    backgroundSize: "6% auto",
                     backgroundRepeat: "repeat-x",
                   }}
                   className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
