@@ -1,9 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { completeTask } from "../redux/tasks/taskSlice";
 export const Task = () => {
   const tasks = useSelector((state) => state.task.tasks);
+  const dispatch = useDispatch();
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-3 gap-4">
       {tasks.map((task) => (
         <div key={task.id} className="m-5">
           <div
@@ -19,12 +21,13 @@ export const Task = () => {
               <h3 className="text-lg ml-24 mt-1 leading-6 font-medium text-teal-500">
                 {task.title}{" "}
               </h3>
-              <a
-                href="#"
+              <button
+                disabled={task.status}
+                onClick={() => dispatch(completeTask(task.id))}
                 className="inline-block text-sm ml-6  px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-800 hover:bg-white mt-4 lg:mt-0"
               >
                 TAMAMLANDI
-              </a>
+              </button>
             </div>
             <div className="border-t border-gray-200">
               <dl>
@@ -89,9 +92,9 @@ export const Task = () => {
                             aria-hidden="true"
                           >
                             <path
-                              fill-rule="evenodd"
+                              fillRule="evenodd"
                               d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                              clip-rule="evenodd"
+                              clipRule="evenodd"
                             />
                           </svg>
                           <span className="ml-2 flex-1 w-0 truncate">
@@ -119,9 +122,9 @@ export const Task = () => {
                             aria-hidden="true"
                           >
                             <path
-                              fill-rule="evenodd"
+                              fillRule="evenodd"
                               d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                              clip-rule="evenodd"
+                              clipRule="evenodd"
                             />
                           </svg>
                           <span className="ml-2 flex-1 w-0 truncate">

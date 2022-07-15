@@ -61,7 +61,16 @@ export const taskSlice = createSlice({
     error: null,
   },
   
-  reducers: {},
+  reducers: {
+    addTask: (state, action) => {
+      state.tasks.push(action.payload);
+    },
+    completeTask: (state, action) => {
+      const task = state.tasks.find((task) => task.id === action.payload);
+      task.status = true;
+    }
+  },
 });
 
+export const { addTask, completeTask } = taskSlice.actions;
 export default taskSlice.reducer;
