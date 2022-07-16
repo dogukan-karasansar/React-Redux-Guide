@@ -5,7 +5,7 @@ const { default: mongoose } = require("mongoose");
 router.get("/", (req, res) => {
   Task.find()
     .then((tasks) => {
-      res.json(tasks);
+      return res.json(tasks);
     })
     .catch((err) => {
       res.json(err);

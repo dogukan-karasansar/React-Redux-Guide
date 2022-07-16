@@ -15,8 +15,8 @@ const upload = multer({ storage: storage });
 
 router.get("/:taskId", (req, res) => {
   Image.find({ taskId: req.params.taskId.slice(7) })
-    .then((tasks) => {
-      return res.json(tasks);
+    .then((images) => {
+      return res.json(images);
     })
     .catch((err) => {
       return res.json(err);
