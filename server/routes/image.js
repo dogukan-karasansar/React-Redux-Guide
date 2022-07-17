@@ -8,7 +8,10 @@ const storage = multer.diskStorage({
     cb(null, "./uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
+    var random = Math.floor(Math.random() * 1000000);
+    var filename = file.originalname.replace(/\s/g, "");
+    filename = new Date().toISOString() + random + filename;
+    cb(null, filename);
   },
 });
 const upload = multer({ storage: storage });

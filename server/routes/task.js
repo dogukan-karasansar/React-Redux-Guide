@@ -4,6 +4,7 @@ const { default: mongoose } = require("mongoose");
 
 router.get("/", (req, res) => {
   Task.find()
+  .sort({ createdAt: -1 })
     .then((tasks) => {
       return res.json(tasks);
     })
@@ -13,8 +14,8 @@ router.get("/", (req, res) => {
 });
 
 router.post("/completed", (req, res) => {
-  Task.findOneAndUpdate({ id: req.body.id }, { status: true }).then((task) => {
-    res.json(task);
+  Task.findOneAndUpdate({ id:  req.body.id}, { status: true }).then((task) => {
+    res.json(req.body.id);
   }).catch((err) => {});
 });
 

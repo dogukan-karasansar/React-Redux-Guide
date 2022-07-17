@@ -110,11 +110,23 @@ export const taskSlice = createSlice({
       state.error = action.error;
       state.loading = false;
     },
+    [AddTaskImage.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [AddTaskImage.fulfilled]: (state, action) => {
+      state.loading = false;
+      window.location.reload();
+    },
+    [AddTaskImage.rejected]: (state, action) => {
+      state.error = action.error;
+      state.loading = false;
+    },
     [completeTask.pending]: (state, action) => {
       state.loading = true;
     },
     [completeTask.fulfilled]: (state, action) => {
-      state.tasks.find((task) => task.id === action.payload).status = true;
+      var task = state.tasks.find((task) => task.id === action.payload);
+      task.status = true;
       state.loading = false;
     },
     [completeTask.rejected]: (state, action) => {

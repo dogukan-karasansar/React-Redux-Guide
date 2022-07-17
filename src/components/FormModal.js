@@ -3,8 +3,6 @@ import { useDispatch } from "react-redux";
 import {
   AddTask,
   AddTaskImage,
-  getTaskImage,
-  getTask,
 } from "../redux/tasks/taskSlice";
 
 export const FormModal = ({ show, setShowModal }) => {
@@ -23,7 +21,9 @@ export const FormModal = ({ show, setShowModal }) => {
     let uploadTask = dispatch(AddTask(task));
     uploadTask.then(async function (value) {
       task.id = value.payload.id;
-      dispatch(AddTaskImage(task));
+      if (task.images.length > 0) {
+        dispatch(AddTaskImage(task));
+      }
     });
 
     setShowModal(false);
