@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTask } from "../redux/tasks/taskSlice";
+import {
+  AddTask,
+  AddTaskImage,
+  getTaskImage,
+  getTask,
+} from "../redux/tasks/taskSlice";
 
 export const FormModal = ({ show, setShowModal }) => {
   const dispatch = useDispatch();
   const [task, setTask] = useState({
-    id: Math.random(5, 999999),
+    id: "",
     title: "",
     description: "",
     author: "Doğukan Karasansar",
@@ -15,8 +20,12 @@ export const FormModal = ({ show, setShowModal }) => {
   });
 
   const AddTaskAction = (task, setShowModal) => {
-    console.log(task);
-    dispatch(addTask(task));
+    let uploadTask = dispatch(AddTask(task));
+    uploadTask.then(async function (value) {
+      task.id = value.payload.id;
+      dispatch(AddTaskImage(task));
+    });
+
     setShowModal(false);
   };
   return (
@@ -102,7 +111,9 @@ export const FormModal = ({ show, setShowModal }) => {
                         Öncelik
                       </label>
                       <select
-                        onChange={(e) => setTask({ ...task, priority: e.target.value })}
+                        onChange={(e) =>
+                          setTask({ ...task, priority: e.target.value })
+                        }
                         className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         id="grid-state"
                       >

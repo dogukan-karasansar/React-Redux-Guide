@@ -13,8 +13,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.get("/:taskId", (req, res) => {
-  Image.find({ taskId: req.params.taskId.slice(7) })
+router.get("/", (req, res) => {
+  Image.find()
     .then((images) => {
       return res.json(images);
     })
@@ -24,7 +24,6 @@ router.get("/:taskId", (req, res) => {
 });
 
 router.post("/addImage", upload.single("taskImage"), (req, res) => {
-  console.log(req.file);
   const newImage = new Image({
     id: new mongoose.Types.ObjectId(),
     taskId: req.body.taskId,
@@ -33,8 +32,9 @@ router.post("/addImage", upload.single("taskImage"), (req, res) => {
   });
   newImage
     .save()
-    .then((image) => {
-      return res.json(image);
+    .then(() => {
+      console.log(newImage);
+      return res.json(newImage);
     })
     .catch((err) => {
       return res.json(err);

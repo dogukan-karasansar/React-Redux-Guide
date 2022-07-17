@@ -12,6 +12,12 @@ router.get("/", (req, res) => {
     });
 });
 
+router.post("/completed", (req, res) => {
+  Task.findOneAndUpdate({ id: req.body.id }, { status: true }).then((task) => {
+    res.json(task);
+  }).catch((err) => {});
+});
+
 router.post("/addTask", (req, res) => {
   const newTask = new Task({
     id: new mongoose.Types.ObjectId(),
@@ -24,7 +30,7 @@ router.post("/addTask", (req, res) => {
   newTask
     .save()
     .then(() => {
-      return res.json("Görev Başarıyla Eklendi");
+      return res.json(newTask);
     })
     .catch((err) => {
       return res.json(err);

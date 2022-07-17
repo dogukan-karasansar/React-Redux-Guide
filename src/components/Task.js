@@ -1,18 +1,25 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { completeTask } from "../redux/tasks/taskSlice";
+import { completeTask, getTask, getTaskImage } from "../redux/tasks/taskSlice";
+
 export const Task = () => {
-  const tasks = useSelector((state) => state.task.tasks);
   const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(getTask());
+    dispatch(getTaskImage());
+  }, [dispatch]);
+
+  const tasks = useSelector((state) => state.task.tasks);
+  const images = useSelector((state) => state.task.images);
   return (
     <div className="grid grid-cols-3 gap-4">
       {tasks.map((task) => (
         <div key={task.id} className="m-5">
           <div
             className={`${
-              task.priority == "low"
+              task.priority === "low"
                 ? "bg-red-200"
-                : task.priority == "medium"
+                : task.priority === "medium"
                 ? "bg-orange-200"
                 : "bg-red-500"
             } overflow-hidden sm:rounded-lg`}
@@ -69,7 +76,7 @@ export const Task = () => {
                 <div
                   style={{
                     borderBottom: "none",
-                    backgroundPosition: 'bottom left',
+                    backgroundPosition: "bottom left",
                     backgroundImage: `url('data:image/svg+xml;utf8, <svg viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg"><path d="M -15 110 L100 10 L215 110" fill="none" stroke="%23ededed" stroke-width="4" vector-effect="non-scaling-stroke"/></svg>')`,
                     backgroundSize: "6% auto",
                     backgroundRepeat: "repeat-x",
@@ -79,69 +86,45 @@ export const Task = () => {
                   <dt className="text-sm font-medium text-gray-500">EKLER</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     <ul
-                      role="list"
                       className="borderm mb-5 border-gray-200 rounded-md divide-y divide-gray-200"
                     >
-                      <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                        <div className="w-0 flex-1 flex items-center">
-                          <svg
-                            className="flex-shrink-0 h-5 w-5 text-gray-400"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          <span className="ml-2 flex-1 w-0 truncate">
-                            {" "}
-                            resume_back_end_developer.pdf{" "}
-                          </span>
-                        </div>
-                        <div className="ml-4 flex-shrink-0">
-                          <a
-                            href="#"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                          >
-                            {" "}
-                            Download{" "}
-                          </a>
-                        </div>
-                      </li>
-                      <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                        <div className="w-0 flex-1 flex items-center">
-                          <svg
-                            className="flex-shrink-0 h-5 w-5 text-gray-400"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          <span className="ml-2 flex-1 w-0 truncate">
-                            {" "}
-                            coverletter_back_end_developer.pdf{" "}
-                          </span>
-                        </div>
-                        <div className="ml-4 flex-shrink-0">
-                          <a
-                            href="#"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                          >
-                            {" "}
-                            Download{" "}
-                          </a>
-                        </div>
-                      </li>
+                      {images &&
+                        images.map((image) =>
+                          task.id === image.taskId ? (
+                            <>
+                              <li key={image.id} className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                <div className="w-0 flex-1 flex items-center">
+                                  <svg
+                                    className="flex-shrink-0 h-5 w-5 text-gray-400"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    aria-hidden="true"
+                                  >
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                  <span className="ml-2 flex-1 w-0 truncate">
+                                    {" "}
+                                    {image.name}{" "}
+                                  </span>
+                                </div>
+                                <div className="ml-4 flex-shrink-0">
+                                  <a
+                                    href={"http://localhost:3001/" + image.url}
+                                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                                  >
+                                    {" "}
+                                    İndir{" "}
+                                  </a>
+                                </div>
+                              </li>
+                            </>
+                          ) : null
+                        )}
                     </ul>
                   </dd>
                 </div>

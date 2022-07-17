@@ -1,12 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const { default: mongoose } = require("mongoose");
+var path = require('path');
 
 require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 6000;
 
+app.use('/uploads', express.static('uploads'));
 app.use(cors());
 app.use(express.json());
 
